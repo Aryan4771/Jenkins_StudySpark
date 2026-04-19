@@ -1,38 +1,213 @@
-.App {
-  text-align: center;
+/* App.css (Futuristic Task Items) */
+
+.task {
+  display: grid !important;              
+  grid-template-columns: 32px 1fr auto;  
+  align-items: center; /* Center standard layout */
+  gap: 16px;
+  border: 1px solid var(--panel-border);
+  padding: 18px 24px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Glow highlight on hover */
+.task::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 4px; height: 100%;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.task:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.task:hover::before {
+  opacity: 1;
+}
+
+/* Custom Futuristic Checkbox */
+.check {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--panel-border);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  display: grid;
+  place-items: center;
+}
+
+.check:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.check:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.check:checked::after {
+  content: "✓";
+  color: #022c22;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+/* Content column */
+.task-content { min-width: 0; }
+.task-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.4;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-title.done {
+  text-decoration: line-through;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  opacity: 0.5;
+  color: var(--muted);
+}
+
+/* Meta badges row */
+.task-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* Actions column */
+.task-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-self: end;     
+}
+
+/* Immersive Focus Mode Screen */
+.focus-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--text);
 }
 
-.App-link {
-  color: #61dafb;
+.focus-ring {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 80px rgba(45, 212, 191, 0.1);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.focus-ring::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(var(--accent), var(--secondary), var(--accent));
+  animation: spinSlow 4s linear infinite;
+  mask: radial-gradient(transparent 68%, black 70%);
+  -webkit-mask: radial-gradient(transparent 68%, black 70%);
+}
+
+.focus-ring.paused::before {
+  animation-play-state: paused;
+  background: conic-gradient(var(--muted), var(--muted));
+}
+
+/* React Calendar Cosmic Overrides */
+.custom-calendar-wrapper .react-calendar {
+  width: 100%;
+  background: transparent;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+}
+
+.custom-calendar-wrapper .react-calendar__navigation button {
+  color: var(--text);
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 8px;
+  margin: 4px;
+  min-width: 44px;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+.custom-calendar-wrapper .react-calendar__navigation button:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.custom-calendar-wrapper .react-calendar__month-view__weekdays {
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+  abbr { text-decoration: none; }
+}
+
+.custom-calendar-wrapper .react-calendar__tile {
+  background: transparent;
+  color: var(--text);
+  border-radius: 12px;
+  padding: 12px 0;
+  transition: all 0.2s;
+}
+.custom-calendar-wrapper .react-calendar__tile:hover {
+  background: rgba(45, 212, 191, 0.1);
+}
+.custom-calendar-wrapper .react-calendar__tile--now {
+  background: rgba(168, 85, 247, 0.2);
+  color: var(--secondary);
+  font-weight: bold;
+}
+.custom-calendar-wrapper .react-calendar__tile--active {
+  background: var(--accent) !important;
+  color: #022c22 !important;
+  font-weight: bold;
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+@media (max-width: 600px) {
+  .task { 
+    grid-template-columns: 24px 1fr; 
+    padding: 16px;
   }
-  to {
-    transform: rotate(360deg);
+  .task-actions { 
+    grid-column: 2 / -1; 
+    justify-self: start; 
+    margin-top: 16px; 
   }
 }
