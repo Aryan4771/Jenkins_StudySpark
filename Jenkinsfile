@@ -30,8 +30,11 @@ pipeline {
         stage('Code Quality') {
             steps {
                 bat 'npx eslint src --ext .js,.jsx'
-            }
+                withSonarQubeEnv('SonarQube') {
+                bat 'sonar-scanner'
         }
+    }
+}
 
         stage('Security') {
             steps {
