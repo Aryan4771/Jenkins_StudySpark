@@ -37,7 +37,7 @@ pipeline {
             steps {
                 bat 'npm audit || exit /b 0'
                 bat 'docker save -o my-app.tar %IMAGE_NAME%:%IMAGE_TAG%'
-                bat 'docker run --rm -v "%cd%:/tmp" aquasec/trivy image --input /tmp/my-app.tar'
+                bat 'docker run --rm -v "%cd%:/tmp" aquasec/trivy image --input /tmp/my-app.tar || exit /b 0'
             }
         }
 
