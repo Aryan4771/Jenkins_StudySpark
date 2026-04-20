@@ -56,7 +56,12 @@ export default function TaskItem({ task, onToggle, onDelete, index }) {
 
       {/* col 3: actions */}
       <div className="task-actions">
-        <button className="btn danger" onClick={() => onDelete(id)} style={{ padding: "8px", borderRadius: "8px" }}>
+        <button
+          className="btn danger"
+          onClick={() => onDelete(id)}
+          style={{ padding: "8px", borderRadius: "8px" }}
+          aria-label="Delete task"
+        >
           <Trash2 size={16} />
         </button>
       </div>

@@ -21,3 +21,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Docker / generated artifacts
+my-app.tar
+*.tar
+
+# Optional local tooling/cache
+.sonar

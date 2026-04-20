@@ -4,15 +4,13 @@ pipeline {
     environment {
         IMAGE_NAME = "my-app"
         IMAGE_TAG = "${BUILD_NUMBER}"
+        STAGING_CONTAINER = "my-app-staging"
+        APP_PORT = "3000"
+        STAGING_PORT = "3001"
+        RELEASE_TAG = "v1.0.${BUILD_NUMBER}"
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-            git branch: 'main', url: 'https://github.com/Aryan4771/Jenkins_StudySpark.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 bat 'npm install'
@@ -23,45 +21,58 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'npm test -- --watchAll=false --passWithNoTests'
+                bat 'npm run test:ci'
+            }
+            post {
+                always {
+                    junit 'reports/junit/js-test-results.xml'
+                }
             }
         }
 
-        stage('Code Quality') {
+        stage('Code Quality (SonarQube)') {
             steps {
-                bat 'npx eslint src --ext .js,.jsx'
+                bat 'npm run lint'
                 withSonarQubeEnv('SonarQube') {
-                bat 'sonar-scanner'
-        }
-    }
-}
-
-        stage('Security') {
-            steps {
-                bat 'npm audit || exit /b 0'
-                bat 'docker save -o my-app.tar %IMAGE_NAME%:%IMAGE_TAG%'
-                bat 'docker run --rm -v "%cd%:/tmp" aquasec/trivy image --input /tmp/my-app.tar || exit /b 0'
+                    bat 'sonar-scanner'
+                }
+            }
+            post {
+                success {
+                    timeout(time: 5, unit: 'MINUTES') {
+                        waitForQualityGate abortPipeline: true
+                    }
+                }
             }
         }
 
-        stage('Deploy to Staging') {
+        stage('Security (Trivy)') {
             steps {
-                bat 'docker rm -f my-app-staging || exit /b 0'
-                bat 'docker run -d --name my-app-staging -p 3001:80 %IMAGE_NAME%:%IMAGE_TAG%'
+                bat 'docker run --rm -v //var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --severity HIGH,CRITICAL --no-progress %IMAGE_NAME%:%IMAGE_TAG%'
             }
         }
 
-        stage('Release to Production') {
+        stage('Deploy (Docker Staging)') {
             steps {
-                input 'Approve production release?'
-                bat 'docker rm -f my-app-prod || exit /b 0'
-                bat 'docker run -d --name my-app-prod -p 3002:80 %IMAGE_NAME%:%IMAGE_TAG%'
+                bat 'docker rm -f %STAGING_CONTAINER% || exit /b 0'
+                bat 'docker run -d --name %STAGING_CONTAINER% -p %STAGING_PORT%:%APP_PORT% %IMAGE_NAME%:%IMAGE_TAG%'
             }
         }
 
-        stage('Monitoring') {
+        stage('Release (Version Tagging)') {
             steps {
-                bat 'curl http://localhost:3002'
+                bat 'git config user.email "jenkins@local"'
+                bat 'git config user.name "Jenkins"'
+                bat 'git tag %RELEASE_TAG%'
+                bat 'echo Release tag created: %RELEASE_TAG%'
+            }
+        }
+
+        stage('Monitoring (Health + Stats)') {
+            steps {
+                bat 'curl -f http://localhost:%STAGING_PORT%/'
+                bat 'docker logs --tail 50 %STAGING_CONTAINER%'
+                bat 'docker stats --no-stream %STAGING_CONTAINER%'
             }
         }
     }
