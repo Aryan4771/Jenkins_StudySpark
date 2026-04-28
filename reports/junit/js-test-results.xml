@@ -1,7 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="1" failures="0" errors="0" time="4.082">
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2026-04-20T07:43:46" time="3.006" tests="1">
-    <testcase classname=" renders app without crashing" name=" renders app without crashing" time="0.031">
+<testsuites name="jest tests" tests="33" failures="0" errors="0" time="8.209">
+  <testsuite name="ProtectedRoute" errors="0" failures="0" skipped="0" timestamp="2026-04-20T09:12:58" time="2.583" tests="2">
+    <testcase classname="ProtectedRoute redirects to login when user is not authenticated" name="ProtectedRoute redirects to login when user is not authenticated" time="0.097">
+    </testcase>
+    <testcase classname="ProtectedRoute renders protected content when user exists" name="ProtectedRoute renders protected content when user exists" time="0.009">
+    </testcase>
+  </testsuite>
+  <testsuite name="TaskItem" errors="0" failures="0" skipped="0" timestamp="2026-04-20T09:12:58" time="3.089" tests="3">
+    <testcase classname="TaskItem renders task details" name="TaskItem renders task details" time="0.085">
+    </testcase>
+    <testcase classname="TaskItem calls onToggle with inverse done state" name="TaskItem calls onToggle with inverse done state" time="0.034">
+    </testcase>
+    <testcase classname="TaskItem calls onDelete with task id" name="TaskItem calls onDelete with task id" time="0.09">
+    </testcase>
+  </testsuite>
+  <testsuite name="FilterBar" errors="0" failures="0" skipped="0" timestamp="2026-04-20T09:12:58" time="3.072" tests="4">
+    <testcase classname="FilterBar renders subject, priority, and search controls" name="FilterBar renders subject, priority, and search controls" time="0.097">
+    </testcase>
+    <testcase classname="FilterBar updates subject and query through onChange" name="FilterBar updates subject and query through onChange" time="0.029">
+    </testcase>
+    <testcase classname="FilterBar clear button resets filters for free plan" name="FilterBar clear button resets filters for free plan" time="0.094">
+    </testcase>
+    <testcase classname="FilterBar shows due date range only for pro and clear resets due filters" name="FilterBar shows due date range only for pro and clear resets due filters" time="0.043">
+    </testcase>
+  </testsuite>
+  <testsuite name="TasksContext" errors="0" failures="0" skipped="0" timestamp="2026-04-20T09:12:58" time="3.179" tests="5">
+    <testcase classname="TasksContext loads user tasks from localStorage on mount" name="TasksContext loads user tasks from localStorage on mount" time="0.07">
+    </testcase>
+    <testcase classname="TasksContext handles invalid localStorage JSON safely" name="TasksContext handles invalid localStorage JSON safely" time="0.022">
+    </testcase>
+    <testcase classname="TasksContext adds task, updates derived subjects, and persists to localStorage" name="TasksContext adds task, updates derived subjects, and persists to localStorage" time="0.127">
+    </testcase>
+    <testcase classname="TasksContext toggles done state and removes task" name="TasksContext toggles done state and removes task" time="0.075">
+    </testcase>
+    <testcase classname="TasksContext does not mutate tasks when no authenticated user" name="TasksContext does not mutate tasks when no authenticated user" time="0.031">
+    </testcase>
+  </testsuite>
+  <testsuite name="TaskForm" errors="0" failures="0" skipped="0" timestamp="2026-04-20T09:12:58" time="3.188" tests="5">
+    <testcase classname="TaskForm renders task form controls" name="TaskForm renders task form controls" time="0.163">
+    </testcase>
+    <testcase classname="TaskForm keeps submit button disabled until title and subject are provided" name="TaskForm keeps submit button disabled until title and subject are provided" time="0.055">
+    </testcase>
+    <testcase classname="TaskForm submits expected payload for free plan and resets form" name="TaskForm submits expected payload for free plan and resets form" time="0.055">
+    </testcase>
+    <testcase classname="TaskForm shows due date only for pro plan and includes it in payload" name="TaskForm shows due date only for pro plan and includes it in payload" time="0.046">
+    </testcase>
+    <testcase classname="TaskForm does not submit for empty or whitespace-only required fields" name="TaskForm does not submit for empty or whitespace-only required fields" time="0.046">
+    </testcase>
+  </testsuite>
+  <testsuite name="ForgotPassword page" errors="0" failures="0" skipped="0" timestamp="2026-04-20T09:12:58" time="3.238" tests="4">
+    <testcase classname="ForgotPassword page renders email input and action buttons" name="ForgotPassword page renders email input and action buttons" time="0.25">
+    </testcase>
+    <testcase classname="ForgotPassword page submits reset request and shows success message" name="ForgotPassword page submits reset request and shows success message" time="0.099">
+    </testcase>
+    <testcase classname="ForgotPassword page shows loading text while request is in progress" name="ForgotPassword page shows loading text while request is in progress" time="0.074">
+    </testcase>
+    <testcase classname="ForgotPassword page shows error on failure and supports back navigation" name="ForgotPassword page shows error on failure and supports back navigation" time="0.073">
+    </testcase>
+  </testsuite>
+  <testsuite name="Groups page" errors="0" failures="0" skipped="0" timestamp="2026-04-20T09:12:58" time="3.298" tests="4">
+    <testcase classname="Groups page shows login prompt when user is not available" name="Groups page shows login prompt when user is not available" time="0.098">
+    </testcase>
+    <testcase classname="Groups page renders empty groups state from firestore snapshot" name="Groups page renders empty groups state from firestore snapshot" time="0.061">
+    </testcase>
+    <testcase classname="Groups page creates group with invite email and navigates to room" name="Groups page creates group with invite email and navigates to room" time="0.107">
+    </testcase>
+    <testcase classname="Groups page handles duplicate self-invite and create errors" name="Groups page handles duplicate self-invite and create errors" time="0.052">
+    </testcase>
+  </testsuite>
+  <testsuite name="Login page" errors="0" failures="0" skipped="0" timestamp="2026-04-20T09:12:58" time="3.417" tests="5">
+    <testcase classname="Login page renders login form and basic accessible controls" name="Login page renders login form and basic accessible controls" time="0.25">
+    </testcase>
+    <testcase classname="Login page submits credentials and navigates to tasks on success" name="Login page submits credentials and navigates to tasks on success" time="0.139">
+    </testcase>
+    <testcase classname="Login page shows an error alert when email/password login fails" name="Login page shows an error alert when email/password login fails" time="0.055">
+    </testcase>
+    <testcase classname="Login page navigates to forgot-password screen on click" name="Login page navigates to forgot-password screen on click" time="0.025">
+    </testcase>
+    <testcase classname="Login page supports google login success and failure paths" name="Login page supports google login success and failure paths" time="0.138">
+    </testcase>
+  </testsuite>
+  <testsuite name="App" errors="0" failures="0" skipped="0" timestamp="2026-04-20T09:12:58" time="5.045" tests="1">
+    <testcase classname="App renders app without crashing" name="App renders app without crashing" time="0.021">
     </testcase>
   </testsuite>
 </testsuites>

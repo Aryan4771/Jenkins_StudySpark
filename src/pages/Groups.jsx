@@ -13,6 +13,8 @@ export default function Groups() {
   const [newGroupName, setNewGroupName] = useState("");
   const [inviteEmail, setInviteEmail] = useState("");
   const [loading, setLoading] = useState(true);
+  const groupNameInputId = "groups-name";
+  const inviteEmailInputId = "groups-invite-email";
 
   useEffect(() => {
     if (!user) return;
@@ -73,8 +75,9 @@ export default function Groups() {
         <h2 style={{ marginTop: 0, display: "flex", alignItems: "center", gap: "8px" }}><Plus /> Create a Group</h2>
         <form className="row" onSubmit={handleCreate}>
           <div className="field">
-            <label>Group Name</label>
+            <label htmlFor={groupNameInputId}>Group Name</label>
             <input 
+              id={groupNameInputId}
               value={newGroupName} 
               onChange={e => setNewGroupName(e.target.value)} 
               placeholder="e.g. History Finals Grp" 
@@ -82,8 +85,9 @@ export default function Groups() {
             />
           </div>
           <div className="field">
-            <label>Invite Peer (Email)</label>
+            <label htmlFor={inviteEmailInputId}>Invite Peer (Email)</label>
             <input 
+              id={inviteEmailInputId}
               type="email"
               value={inviteEmail} 
               onChange={e => setInviteEmail(e.target.value)} 

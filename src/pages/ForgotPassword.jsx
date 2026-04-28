@@ -10,6 +10,7 @@ export default function ForgotPassword() {
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const emailInputId = "forgot-password-email";
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -43,8 +44,8 @@ export default function ForgotPassword() {
         Enter the email you used to sign up. We’ll send a reset link.
       </p>
 
-      {msg && <p style={{ color: "#16a34a", marginTop: 8 }}>{msg}</p>}
-      {err && <p style={{ color: "#ef4444", marginTop: 8 }}>{err}</p>}
+      {msg && <p role="status" style={{ color: "#16a34a", marginTop: 8 }}>{msg}</p>}
+      {err && <p role="alert" style={{ color: "#ef4444", marginTop: 8 }}>{err}</p>}
 
       <form
         className="row"
@@ -59,6 +60,7 @@ export default function ForgotPassword() {
         {/* Email field full width */}
         <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
           <label
+            htmlFor={emailInputId}
             style={{
               color: "white",
               fontSize: "1.25rem",
@@ -70,6 +72,7 @@ export default function ForgotPassword() {
             Email
           </label>
           <input
+            id={emailInputId}
             type="email"
             autoComplete="email"
             value={email}

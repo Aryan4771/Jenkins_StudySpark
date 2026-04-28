@@ -115,7 +115,7 @@ label {
   color: var(--muted);
 }
 
-input, select {
+input:not([type="checkbox"]), select {
   width: 100%;
   padding: 12px 16px;
   border-radius: 12px;

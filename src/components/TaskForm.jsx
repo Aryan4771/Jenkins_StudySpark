@@ -15,6 +15,10 @@ export default function TaskForm({ onAdd, subjects }) {
 
   const canSubmit = title.trim() && subject.trim();
   const subjectList = useMemo(() => subjects || [], [subjects]);
+  const titleInputId = "task-form-title";
+  const subjectInputId = "task-form-subject";
+  const priorityInputId = "task-form-priority";
+  const dueDateInputId = "task-form-due-date";
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -36,8 +40,9 @@ export default function TaskForm({ onAdd, subjects }) {
   return (
     <form className="row" onSubmit={handleSubmit}>
       <div className="field" style={{ flex: "2 1 240px" }}>
-        <label>Title</label>
+        <label htmlFor={titleInputId}>Title</label>
         <input
+          id={titleInputId}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="e.g. Full Stacks"
@@ -45,8 +50,9 @@ export default function TaskForm({ onAdd, subjects }) {
       </div>
 
       <div className="field" style={{ flex: "1 1 180px" }}>
-        <label>Subject</label>
+        <label htmlFor={subjectInputId}>Subject</label>
         <input
+          id={subjectInputId}
           list="subjects"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
@@ -60,8 +66,8 @@ export default function TaskForm({ onAdd, subjects }) {
       </div>
 
       <div className="field" style={{ flex: "1 1 160px" }}>
-        <label>Priority</label>
-        <select value={priority} onChange={(e) => setPriority(e.target.value)}>
+        <label htmlFor={priorityInputId}>Priority</label>
+        <select id={priorityInputId} value={priority} onChange={(e) => setPriority(e.target.value)}>
           {PRIORITIES.map((p) => (
             <option key={p} value={p}>
               {p}
@@ -73,8 +79,9 @@ export default function TaskForm({ onAdd, subjects }) {
       {/* show Due Date picker only for Pro */}
       {plan === "pro" && (
         <div className="field" style={{ flex: "1 1 180px" }}>
-          <label>Due Date (Pro)</label>
+          <label htmlFor={dueDateInputId}>Due Date (Pro)</label>
           <input
+            id={dueDateInputId}
             type="date"
             value={dueAt}
             onChange={(e) => setDueAt(e.target.value)}
@@ -85,6 +92,7 @@ export default function TaskForm({ onAdd, subjects }) {
       <div className="field" style={{ flex: "1 1 160px" }}>
         <label>&nbsp;</label>
         <button
+          type="submit"
           className="btn primary"
           style={{ width: "100%", height: "45px" }}
           disabled={!canSubmit}

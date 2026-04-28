@@ -20,9 +20,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false --ci --passWithNoTests",
+    "test": "react-scripts test",
+    "sonar": "sonar-scanner",
     "lint": "eslint src --ext .js,.jsx",
-    "test:ci": "react-scripts test --watchAll=false --ci --passWithNoTests --reporters=default --reporters=jest-junit"
+    "test:ci": "react-scripts test --watchAll=false --ci --coverage --reporters=default --reporters=jest-junit"
   },
   "eslintConfig": {
     "extends": [
@@ -50,7 +51,8 @@
     "eslint-plugin-react": "^7.37.5",
     "globals": "^17.5.0",
     "jest": "^27.5.1",
-    "jest-junit": "^16.0.0"
+    "jest-junit": "^16.0.0",
+    "sonar-scanner": "^3.1.0"
   },
   "jest-junit": {
     "outputDirectory": "reports/junit",

@@ -4,10 +4,20 @@ import App from "../App.jsx";
 
 jest.mock("react-calendar", () => () => <div>Mock Calendar</div>);
 
-jest.spyOn(console, "error").mockImplementation(() => {});
-jest.spyOn(console, "warn").mockImplementation(() => {});
-
 describe("App", () => {
+  let errorSpy;
+  let warnSpy;
+
+  beforeEach(() => {
+    errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    errorSpy.mockRestore();
+    warnSpy.mockRestore();
+  });
+
   test("renders app without crashing", () => {
     render(
       <MemoryRouter>

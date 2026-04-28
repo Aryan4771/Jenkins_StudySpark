@@ -9,6 +9,8 @@ export default function Login(){
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
+  const emailInputId = "login-email";
+  const passwordInputId = "login-password";
 
   async function handleSubmit(e){
     e.preventDefault();
@@ -39,13 +41,13 @@ export default function Login(){
 
       <form className="row" onSubmit={handleSubmit}>
         <div className="field">
-          <label>Email</label>
-          <input type="email" value={email} onChange={e=>setEmail(e.target.value)} required />
+          <label htmlFor={emailInputId}>Email</label>
+          <input id={emailInputId} type="email" value={email} onChange={e=>setEmail(e.target.value)} required />
         </div>
 
         <div className="field">
-          <label>Password</label>
-          <input type="password" value={password} onChange={e=>setPassword(e.target.value)} required />
+          <label htmlFor={passwordInputId}>Password</label>
+          <input id={passwordInputId} type="password" value={password} onChange={e=>setPassword(e.target.value)} required />
         </div>
 
         <div className="field" style={{display:"flex", alignItems:"center", justifyContent:"space-between", width:"100%"}}>

@@ -80,10 +80,10 @@ export function TasksProvider({ children }){
   }
 
   // toggle done
-  async function toggleDone(id, done){
+  async function toggleDone(id, currentDone){
     if(!user) return;
     setTasks((currentTasks) =>
-      currentTasks.map((task) => (task.id === id ? { ...task, done: !done } : task))
+      currentTasks.map((task) => (task.id === id ? { ...task, done: currentDone } : task))
     );
   }
 
